@@ -4,7 +4,7 @@
 
 #include <memory>
 
-int main(int argc, char *argv[]) {
+int main(void) {
     
     int foo_data {1};
     int bar_data {2};
