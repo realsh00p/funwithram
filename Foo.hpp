@@ -2,19 +2,23 @@
 
 #include <iostream>
 
+namespace other {
+
 class Foo {
 public:
     Foo() = delete;
-    Foo(Foo&&) = delete;
-    Foo& operator=(Foo&&) = delete;
-    Foo& operator=(const Foo&) = delete;
+    Foo(Foo &&) = delete;
+    Foo &operator=(Foo &&) = delete;
+    Foo &operator=(const Foo &) = delete;
 
-    Foo(const int& _foo) : foo(_foo) {};
+    Foo(const int &_foo) : foo(_foo) {};
 
     void doFoo() {
         std::cerr << "doFoo(): " << foo << std::endl;
     }
 
 private:
-    const int& foo;
+    const int &foo;
 };
+
+} // namespace other
