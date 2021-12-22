@@ -10,16 +10,15 @@
 template <typename T>
 class StaticMonostate {
 public:
-
-    template<typename... Args>
-    StaticMonostate(Args&&... args) : instance(std::forward<Args>(args)...) {
+    template <typename... Args>
+    StaticMonostate(Args &&...args) : instance(std::forward<Args>(args)...) {
     }
 
-    T& get() {
+    T &get() {
         return instance;
     }
 
-    void* operator new(std::size_t size) {
+    void *operator new(std::size_t size) {
         (void)size;
         std::lock_guard<std::mutex> lock(mux);
         if (allocated) {
@@ -29,14 +28,13 @@ public:
         return storage.data();
     }
 
-    void operator delete(void* p) {
+    void operator delete(void *p) {
         (void)p;
         std::lock_guard<std::mutex> lock(mux);
         allocated = false;
     }
 
 private:
-
     T instance;
 
     static std::mutex mux;
@@ -45,11 +43,10 @@ private:
 };
 
 template <typename T>
-std::mutex StaticMonostate<T>::mux{};
+std::mutex StaticMonostate<T>::mux {};
 
 template <typename T>
 bool StaticMonostate<T>::allocated {false};
 
 template <typename T>
 std::array<char, sizeof(T)> StaticMonostate<T>::storage {0};
-
