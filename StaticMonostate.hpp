@@ -8,11 +8,11 @@
 #include <utility>
 
 template <typename T>
-class StaticSingleton {
+class StaticMonostate {
 public:
 
     template<typename... Args>
-    StaticSingleton(Args&&... args) : instance(std::forward<Args>(args)...) {
+    StaticMonostate(Args&&... args) : instance(std::forward<Args>(args)...) {
     }
 
     T& get() {
@@ -45,11 +45,11 @@ private:
 };
 
 template <typename T>
-std::mutex StaticSingleton<T>::mux{};
+std::mutex StaticMonostate<T>::mux{};
 
 template <typename T>
-bool StaticSingleton<T>::allocated {false};
+bool StaticMonostate<T>::allocated {false};
 
 template <typename T>
-std::array<char, sizeof(T)> StaticSingleton<T>::storage {0};
+std::array<char, sizeof(T)> StaticMonostate<T>::storage {0};
 
