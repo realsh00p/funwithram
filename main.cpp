@@ -4,8 +4,7 @@
 
 #include <memory>
 
-int main(void) {
-    
+void doStaticMonostate() {
     int foo_data {1};
     int bar_data {2};
 
@@ -20,6 +19,10 @@ int main(void) {
         bar = std::make_unique<StaticMonostate<Bar>>(bar_data);
         bar->get().doBar();
     }
+}
+
+int main(void) {
+    doStaticMonostate();
 
     std::cin.get();
 }
