@@ -2,7 +2,9 @@
 #include "Foo.hpp"
 
 #include "ContiguousMonostate.hpp"
+#include "ContiguousMonostateAllocator.hpp"
 #include "StaticMonostate.hpp"
+#include "TypeList.hpp"
 
 #include <memory>
 
@@ -27,8 +29,10 @@ void doStaticMonostate() {
 }
 
 void doContiguousMonostate() {
-    using Foo = std::unique_ptr<ContiguousMonostate<other::Foo, other::Foo, other::Bar>>;
-    using Bar = std::unique_ptr<ContiguousMonostate<other::Bar, other::Foo, other::Bar>>;
+    using Types = TypeList<other::Foo, other::Bar>;
+
+    using Foo = std::unique_ptr<ContiguousMonostate<other::Foo, Types>>;
+    using Bar = std::unique_ptr<ContiguousMonostate<other::Bar, Types>>;
 
     Foo foo;
     {

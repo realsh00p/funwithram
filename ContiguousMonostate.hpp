@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ContiguousMonostateAllocator.hpp"
+#include "TypeList.hpp"
 
-template <typename T, typename... Types>
+template <typename T, typename Types>
 class ContiguousMonostate {
 public:
     template <typename... Args>
@@ -14,8 +15,7 @@ public:
     };
 
     void *operator new(std::size_t size) {
-        (void)size;
-        return ContiguousMonostateAllocator<Types...>::allocate(size);
+        return ContiguousMonostateAllocator<Types::size()>::allocate(size);
     }
 
     void operator delete(void *addr) {
